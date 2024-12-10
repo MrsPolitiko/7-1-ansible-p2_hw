@@ -1,0 +1,38 @@
+---
+- name: PolitikoKS Ansible Playbook
+  hosts: net1                       # Only one host from inventory created by vagrant  
+  become: true                      # Become a root
+  gather_facts: no                  # Disable # Disable Ansible gather facts
+  vars:
+    welcome_message: "Welcome to SYSTEM!!!"
+  tasks:
+    # Completing part 1.1 of the task
+    - name: an essential prepare 
+      ansible.builtin.include_tasks:
+        file: roles/stp1.1.yml
+
+    # Completing part 1.2 of the task
+    # Install a tuned package from standert repo
+    - name: install the tuned programm
+      ansible.builtin.apt: 
+        name: tuned
+        state: present
+ 
+    #  Run tuned
+    - name: run the tuned and set the service start on boot
+      ansible.builtin.service:
+        name: tuned
+        enabled: true
+        state: started
+
+    # Completing part 1.3 of the task
+    # Change a MOTD 
+    - name: install the tuned programm
+      ansible.builtin.apt: 
+        name: tuned
+        state: present
+    
+    - name: Ensure the default Apache port is 8080
+      ansible.builtin.lineinfile:
+        path: /etc/update-motd.d/01-header-custom
+        line: printf "{{ welcome_message  }}"
