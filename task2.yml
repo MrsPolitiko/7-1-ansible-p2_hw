@@ -1,0 +1,4 @@
+---
+- name: 03-playbook  # Completing part 2 of the task
+  ansible.builtin.import_playbook: inc/03-playbook.yml
+

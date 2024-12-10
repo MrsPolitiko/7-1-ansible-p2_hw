@@ -1,0 +1,39 @@
+---
+- name: Install apache web server
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+
+- name: Start apache
+  ansible.builtin.service:
+    name: apache2
+    enabled: true
+    state: started
+
+
+- name: Collect only facts about hardware
+  ansible.builtin.setup:
+    gather_subset:
+      - hardware
+      - network
+
+- name: Create a web page with the hostname of the current host
+  vars:
+    host: '{{ inventory_hostname }}'
+    lsb: '{{ ansible_lsb }}' # description
+    cpu: '{{ ansible_processor }}' # 3
+    mem: '{{ ansible_memtotal_mb }}' #
+    #net: '{{ ansible_default_ipv4 }}' # address
+    net: '{{ ansible_enp0s8.ipv4.address }}' # address
+    #net: '{{ hostvars[inventory_hostname] }}'
+    disks: '{{ ansible_devices }}'  # 
+
+  ansible.builtin.template:
+    src: webserver.j2
+    dest: /var/www/html/index.html
+  notify:
+    - Restart apache
+
+- name: Check that you can connect (GET) to a page and it returns a status 200
+  ansible.builtin.uri:
+    url: 'http://{{ ansible_enp0s8.ipv4.address }}/index.html'

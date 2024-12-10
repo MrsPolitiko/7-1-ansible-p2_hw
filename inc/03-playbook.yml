@@ -1,0 +1,21 @@
+---
+- name: 03-playbook                 # Completing part 2 of the task
+  hosts: all
+  become: true                      # Become a root
+  gather_facts: yes
+  vars:
+    welcome_message: "Welcome to SYSTEM!"    
+
+  tasks: 
+    # Change a MOTD 
+    - name: Change a MOTD
+      ansible.builtin.lineinfile:
+        path: /etc/update-motd.d/00-header
+        line: printf "{{ welcome_message  }} My IP is {{ hostvars[inventory_hostname]['ansible_host'] }} My HOSTNAME is {{ inventory_hostname }}"
+
+    # Litle bit tricks for a cosy mod
+    - name: Change .bashrc
+      ansible.builtin.lineinfile:
+        path: /root/.bashrc
+        line: printf "Have a nice day! ( ๑ ˃̵ᴗ˂̵)و ♡ \n"
+

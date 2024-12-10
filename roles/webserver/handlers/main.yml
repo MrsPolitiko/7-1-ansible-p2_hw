@@ -1,0 +1,9 @@
+---
+- name: Restart apache
+  ansible.builtin.service:
+    name: apache2 
+    state: restarted
+
+#  ansible.builtin.debug:
+#    msg: "Apache will be restarted"
+    

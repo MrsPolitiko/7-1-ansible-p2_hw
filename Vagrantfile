@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "task3.yml"
     #ansible.compatibility_mode = "2.0"
     #ansible.verbose = "vvv"
   end

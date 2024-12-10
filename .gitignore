@@ -1,0 +1,5 @@
+*.back
+*.md
+*.png
+!task*.png
+!README.md

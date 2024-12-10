@@ -1,0 +1,11 @@
+Welcome to hostname: <b>{{ host }} {{ net }}</b>  based on <b>{{ lsb.description }}</b> <br>
+Server has CPU: <b>{{ cpu[2] }}</b><br>
+Server has RAM <b>{{ mem }}</b><br>
+It has several disks: <br>
+<ul>
+{% for disk in disks | select('search', '^sd') | list %}
+  <li>disk: {{ disk }} size: {{ disks[disk].size }} </li>
+{% endfor %}
+</ul>
+
+

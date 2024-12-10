@@ -1,0 +1,8 @@
+---
+
+- name: appache info-server # Completing part 3 of the task
+  hosts: all
+  gather_facts: false
+  become: true
+  roles:
+    - webserver
