@@ -1,0 +1,21 @@
+---
+- name: 00-playbook # Completing part 1.1 of the task
+  hosts: all
+  tasks:
+    - name: Download apache-kafka
+      ansible.builtin.get_url:
+        url: https://downloads.apache.org/kafka/3.9.0/kafka-3.9.0-src.tgz
+        dest: ./kafka.tgz
+        mode: "0666"
+        owner: "vagrant"
+
+    - name: Install unzip
+      ansible.builtin.apt: 
+        name: unzip
+        state: present
+
+    - name: Extract downloaded file
+      ansible.builtin.unarchive:
+        src: kafka.tgz
+        dest: /home/vagrant/
+        remote_src: yes

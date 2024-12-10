@@ -1,0 +1,17 @@
+---
+- name: 01-playbook # Completing part 1.2 of the task
+  hosts: all
+  tasks:
+  # Install a tuned package from standert repo
+    - name: install the tuned programm
+      ansible.builtin.apt:
+        name: tuned
+        state: present
+
+    #  Run tuned
+    - name: run the tuned and set the service start on boot
+      ansible.builtin.service:
+        name: tuned
+        enabled: true
+        state: started
+
